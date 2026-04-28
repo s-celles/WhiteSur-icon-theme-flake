@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+  NixOS snowflake — white-fill variant for dark panel themes.
+
+  Same geometry as start-nixos.svg ; only difference is `fill="#ffffff"`
+  on the outer group instead of `fill="currentColor"`. KDE Plasma's
+  panel theme picker doesn't always inherit a sensible `currentColor`
+  for kicker-style buttons (the panel is a Containment, not a Text
+  context), so on dark panels the currentColor flavour rendered as
+  near-black-on-near-black. This explicit white copy is the icon
+  shipped with the *-dark Plasma desktop theme and icon theme variants.
+-->
+<svg xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     version="1.1"
+     viewBox="0 0 501.56252 501.56251">
+  <g transform="translate(-156.48372,537.56136)" fill="#ffffff">
+    <g transform="matrix(0.09048806,0,0,0.09048806,142.32381,-419.8252)">
+      <g transform="matrix(11.047619,0,0,11.047619,-1572.2888,9377.7107)">
+        <g transform="rotate(-60,226.35754,-449.37199)">
+          <path id="path3336-6"
+                d="m 449.71876,-420.51322 122.19683,211.67512 -56.15706,0.5268 -32.6236,-56.8692 -32.85645,56.5653 -27.90237,-0.011 -14.29086,-24.6896 46.81047,-80.4901 -33.22946,-57.8257 z"/>
+        </g>
+        <path id="path4260-0"
+              d="m 309.54892,-710.38827 122.19683,211.67512 -56.15706,0.5268 -32.6236,-56.8692 -32.85645,56.5653 -27.90237,-0.011 -14.29086,-24.6896 46.81047,-80.4901 -33.22946,-57.8256 z"/>
+        <use xlink:href="#path3336-6" transform="rotate(60,728.23563,-692.24036)"/>
+        <use xlink:href="#path3336-6" transform="rotate(180,477.5036,-570.81898)"/>
+        <use xlink:href="#path4260-0" transform="rotate(120,407.33916,-716.08356)"/>
+        <use xlink:href="#path4260-0" transform="rotate(-120,407.28823,-715.86995)"/>
+      </g>
+    </g>
+  </g>
+</svg>

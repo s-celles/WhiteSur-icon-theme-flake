@@ -1,25 +1,33 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!--
-  NixOS snowflake — monochrome, panel kicker icon.
+  NixOS snowflake — dark fill (#363636), panel kicker icon for the
+  light Plasma desktop themes (WhiteSur, WhiteSur-alt).
 
   Cleaned-up version of nixos-artwork's nix-snowflake-white.svg
   (https://github.com/NixOS/nixos-artwork/blob/master/logo/nix-snowflake-white.svg,
   CC-BY licence). The upstream SVG uses a white-to-transparent
   linearGradient for a soft glow effect — that's pretty in print
-  but renders fuzzy at 16-32 px panel sizes. We flatten it to
-  fill="currentColor" so KDE Plasma's panel theme tints it (white
-  on dark panels, dark on light panels) and the edges stay crisp.
+  but renders fuzzy at 16-32 px panel sizes. We flatten it to a
+  solid dark fill (`#363636`, matching the colour WhiteSur's
+  upstream Apple kicker uses for its `.ColorScheme-Text`).
 
-  The geometry is the canonical 6-armed lambda snowflake : two
-  base lambda paths replicated 4 more times via <use> with 60°
-  rotation increments. Names kept identical to upstream so
-  diffing against future logo bumps stays trivial.
+  Why an explicit fill rather than `fill="currentColor"` :
+  KDE Plasma doesn't inherit a sensible currentColor into kicker
+  icons across panel themes (the panel is a Containment, not a
+  Text context), so currentColor falls back to plain black — fine
+  on light panels but invisible on dark panels. We ship a separate
+  start-nixos-white.svg (explicit `#ffffff`) for the dark variant.
+
+  Geometry is the canonical 6-armed lambda snowflake : two base
+  lambda paths replicated 4 more times via <use> with 60° rotation
+  increments. Names kept identical to upstream so diffing against
+  future logo bumps stays trivial.
 -->
 <svg xmlns="http://www.w3.org/2000/svg"
      xmlns:xlink="http://www.w3.org/1999/xlink"
      version="1.1"
      viewBox="0 0 501.56252 501.56251">
-  <g transform="translate(-156.48372,537.56136)" fill="currentColor">
+  <g transform="translate(-156.48372,537.56136)" fill="#363636">
     <g transform="matrix(0.09048806,0,0,0.09048806,142.32381,-419.8252)">
       <g transform="matrix(11.047619,0,0,11.047619,-1572.2888,9377.7107)">
         <g transform="rotate(-60,226.35754,-449.37199)">

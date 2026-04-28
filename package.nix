@@ -38,20 +38,48 @@ stdenvNoCC.mkDerivation {
 
   # Replace upstream's Apple-logo `start-here.svg` (the icon-theme
   # kicker icon used by org.kde.plasma.kickoff and friends) with the
-  # NixOS snowflake from ./assets/. install.sh reads from src/ then
-  # copies into per-variant directories, so we patch the src/ tree
-  # ahead of the script run — the override propagates to WhiteSur,
-  # WhiteSur-light, WhiteSur-dark in one go.
+  # NixOS snowflake from ./assets/.
   #
-  # We overwrite all four sized copies (16, 22, 24, scalable) and
-  # the symbolic variant. The NixOS SVG's viewBox (0 0 501.56 501.56)
-  # auto-scales cleanly down to 16 px, so the same content fits every
-  # slot without extra hand-tuning.
+  # Two variants of the snowflake (mirrors WhiteSur-kde-flake) :
+  #   - start-here-nixos.svg       — solid dark fill, for light themes
+  #   - start-here-nixos-white.svg — solid white fill, for dark themes
+  # We can't use a single `currentColor` SVG because KDE doesn't
+  # inherit a sensible text colour into kicker icons across panel
+  # themes.
+  #
+  # postPatch overwrites src/places/{16,22,24,scalable}/start-here.svg
+  # plus src/places/scalable/start-here-symbolic.svg with the
+  # dark-fill copy ; install.sh's install_theme then generates
+  # WhiteSur, WhiteSur-light and WhiteSur-dark from the patched src/,
+  # so all three initially get the dark-fill snowflake.
+  #
+  # postInstall then specifically overwrites WhiteSur-dark/places/*
+  # with the white-fill copy, so dark-mode Dolphin / Kickoff render
+  # the snowflake as white-on-dark instead of dark-on-dark.
+  #
+  # The NixOS SVG's viewBox (0 0 501.56 501.56) auto-scales cleanly
+  # down to 16 px ; same content fits every slot without per-size
+  # hand-tuning.
   postPatch = ''
     for size in 16 22 24 scalable; do
       cp ${./assets/start-here-nixos.svg} src/places/$size/start-here.svg
     done
     cp ${./assets/start-here-nixos.svg} src/places/scalable/start-here-symbolic.svg
+  '';
+
+  postInstall = ''
+    if [ -d $out/share/icons/WhiteSur-dark/places ]; then
+      for size in 16 22 24 scalable; do
+        if [ -f $out/share/icons/WhiteSur-dark/places/$size/start-here.svg ]; then
+          cp ${./assets/start-here-nixos-white.svg} \
+            $out/share/icons/WhiteSur-dark/places/$size/start-here.svg
+        fi
+      done
+      if [ -f $out/share/icons/WhiteSur-dark/places/scalable/start-here-symbolic.svg ]; then
+        cp ${./assets/start-here-nixos-white.svg} \
+          $out/share/icons/WhiteSur-dark/places/scalable/start-here-symbolic.svg
+      fi
+    fi
   '';
 
   installPhase = ''
