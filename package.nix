@@ -36,6 +36,24 @@ stdenvNoCC.mkDerivation {
   # cross-variant links are dangling, which is harmless.
   dontCheckForBrokenSymlinks = true;
 
+  # Replace upstream's Apple-logo `start-here.svg` (the icon-theme
+  # kicker icon used by org.kde.plasma.kickoff and friends) with the
+  # NixOS snowflake from ./assets/. install.sh reads from src/ then
+  # copies into per-variant directories, so we patch the src/ tree
+  # ahead of the script run — the override propagates to WhiteSur,
+  # WhiteSur-light, WhiteSur-dark in one go.
+  #
+  # We overwrite all four sized copies (16, 22, 24, scalable) and
+  # the symbolic variant. The NixOS SVG's viewBox (0 0 501.56 501.56)
+  # auto-scales cleanly down to 16 px, so the same content fits every
+  # slot without extra hand-tuning.
+  postPatch = ''
+    for size in 16 22 24 scalable; do
+      cp ${./assets/start-here-nixos.svg} src/places/$size/start-here.svg
+    done
+    cp ${./assets/start-here-nixos.svg} src/places/scalable/start-here-symbolic.svg
+  '';
+
   installPhase = ''
     runHook preInstall
 
