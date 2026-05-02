@@ -37,7 +37,7 @@
       # enforce one.
       nixosModules.default = { pkgs, ... }: {
         environment.systemPackages = [
-          self.packages.${pkgs.system}.whitesur-icon-theme
+          self.packages.${pkgs.stdenv.hostPlatform.system}.whitesur-icon-theme
         ];
       };
     };
